@@ -1,8 +1,12 @@
 import mongoose from "mongoose";
 const journalSchema = new mongoose.Schema(
   {
+    plantingDate: { type: Date, required: true },
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    content: { type: String, required: true },
+    worry: { type: String, required: true, trim: true },
+    root: { type: String, required: true, trim: true },
+    prediction: { type: String, required: true, trim: true },
+    reality: { type: String, required: true, trim: true },
     status: {
       type: String,
       required: true,

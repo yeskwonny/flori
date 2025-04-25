@@ -5,9 +5,9 @@ import Journal from "../models/journal.model.js";
 export const createJournal = async (req, res) => {
   try {
     const userId = req.user._id;
-    const { content } = req.body;
+    const { worry, root, prediction, reality, plantingDate } = req.body;
 
-    if (!content) {
+    if (!worry || !root || !prediction || !reality || !plantingDate) {
       return res.status(400).json({ error: "content are required" });
     }
     // xy position
@@ -16,7 +16,11 @@ export const createJournal = async (req, res) => {
     const randomY = Math.floor(Math.random() * 500);
     const newJournal = new Journal({
       user: userId,
-      content,
+      worry,
+      root,
+      prediction,
+      reality,
+      plantingDate,
       x: randomX,
       y: randomY,
     });
@@ -88,7 +92,7 @@ export const getJournalByJournalId = async (req, res) => {
 export const updateJournal = async (req, res) => {
   try {
     const journalId = req.params.id;
-    console.log(journalId)
+    console.log(journalId);
     const { content, status } = req.body;
 
     const updatedJournal = await Journal.findByIdAndUpdate(
@@ -97,7 +101,7 @@ export const updateJournal = async (req, res) => {
       { new: true, runValidators: true }
     );
 
-    console.log(updatedJournal)
+    console.log(updatedJournal);
 
     if (!updatedJournal) {
       return res.status(404).json({ message: "Journal not found" });
